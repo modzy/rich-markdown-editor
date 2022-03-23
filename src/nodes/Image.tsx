@@ -11,8 +11,6 @@ import insertFiles from "../commands/insertFiles";
 import Node from "./Node";
 import cx from "clsx";
 
-import "./Image.scss";
-
 /**
  * Matches following attributes in Markdown-typed image: [, alt, src, class]
  *

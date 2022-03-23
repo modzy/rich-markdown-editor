@@ -39,7 +39,6 @@ const clsx_1 = __importDefault(require("clsx"));
 const useComponentSize_1 = __importDefault(require("../hooks/useComponentSize"));
 const useMediaQuery_1 = __importDefault(require("../hooks/useMediaQuery"));
 const useViewportHeight_1 = __importDefault(require("../hooks/useViewportHeight"));
-require("./FloatingToolbar.scss");
 const SSR = typeof window === "undefined";
 const defaultPosition = {
     left: -1000,

@@ -16,7 +16,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const clsx_1 = __importDefault(require("clsx"));
-require("./ToolbarButton.scss");
 const ToolbarButton = react_1.forwardRef(function ToolbarButton(props, forwardedRef) {
     const { active, className } = props, rest = __rest(props, ["active", "className"]);
     return (React.createElement("button", Object.assign({ ref: forwardedRef, className: clsx_1.default("rme-ToolbarButton", className, { active }) }, rest)));

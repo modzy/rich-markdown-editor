@@ -2,7 +2,6 @@ import * as React from "react";
 import { EditorView } from "prosemirror-view";
 import { EmbedDescriptor, MenuItem } from "../types";
 import baseDictionary from "../dictionary";
-import "./CommandMenu.scss";
 export declare type Props<T extends MenuItem = MenuItem> = {
     rtl: boolean;
     isActive: boolean;

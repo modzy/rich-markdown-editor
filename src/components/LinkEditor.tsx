@@ -19,8 +19,6 @@ import ToolbarButton from "./ToolbarButton";
 import LinkSearchResult from "./LinkSearchResult";
 import baseDictionary from "../dictionary";
 
-import "./LinkEditor.scss";
-
 export type SearchResult = {
   title: string;
   subtitle?: string;

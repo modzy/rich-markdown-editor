@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./BlockMenuItem.scss";
 export declare type Props = {
     selected: boolean;
     disabled?: boolean;

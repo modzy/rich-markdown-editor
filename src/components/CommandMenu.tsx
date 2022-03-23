@@ -14,8 +14,6 @@ import filterExcessSeparators from "../lib/filterExcessSeparators";
 import insertFiles from "../commands/insertFiles";
 import baseDictionary from "../dictionary";
 
-import "./CommandMenu.scss";
-
 const SSR = typeof window === "undefined";
 
 const defaultPosition = {

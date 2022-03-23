@@ -10,10 +10,11 @@
     "test": "jest",
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet",
     "start": "start-storybook -p 6006",
-    "build": "tsc",
+    "build": "tsc && yarn build-sass",
     "preversion": "yarn build",
     "watch": "yarn tsc-watch",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build-sass": "sass ./src/index.scss dist/index.css"
   },
   "serve": {
     "open": true,
@@ -104,6 +105,7 @@
     "prettier": "^1.19.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "sass": "^1.49.9",
     "source-map-loader": "^0.2.4",
     "styled-components": "^5.2.1",
     "ts-loader": "^6.2.1",

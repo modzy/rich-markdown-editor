@@ -30,7 +30,6 @@ const Flex_1 = __importDefault(require("./Flex"));
 const Input_1 = __importDefault(require("./Input"));
 const ToolbarButton_1 = __importDefault(require("./ToolbarButton"));
 const LinkSearchResult_1 = __importDefault(require("./LinkSearchResult"));
-require("./LinkEditor.scss");
 class LinkEditor extends React.Component {
     constructor() {
         super(...arguments);

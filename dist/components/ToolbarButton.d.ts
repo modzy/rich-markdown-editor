@@ -1,5 +1,4 @@
 /// <reference types="react" />
-import "./ToolbarButton.scss";
 declare type Props = {
     active?: boolean;
     disabled?: boolean;

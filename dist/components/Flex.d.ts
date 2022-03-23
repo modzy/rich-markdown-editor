@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./Flex.scss";
 declare type JustifyValues = "center" | "space-around" | "space-between" | "flex-start" | "flex-end";
 declare type AlignValues = "stretch" | "center" | "baseline" | "flex-start" | "flex-end";
 declare type Props = {

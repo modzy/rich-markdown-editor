@@ -78,8 +78,6 @@ import TrailingNode from "./plugins/TrailingNode";
 import PasteHandler from "./plugins/PasteHandler";
 import { PluginSimple } from "markdown-it";
 
-import "./index.scss";
-
 export { schema, parser, serializer, renderToHtml } from "./server";
 
 export { default as Extension } from "./lib/Extension";
@@ -541,10 +539,11 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       editable: () => !this.props.readOnly,
       nodeViews: this.nodeViews,
       handleDOMEvents: this.props.handleDOMEvents,
-      dispatchTransaction: function (transaction) {
+      dispatchTransaction: function(transaction) {
         // callback is bound to have the view instance as its this binding
-        const { state, transactions } =
-          this.state.applyTransaction(transaction);
+        const { state, transactions } = this.state.applyTransaction(
+          transaction
+        );
 
         this.updateState(state);
 

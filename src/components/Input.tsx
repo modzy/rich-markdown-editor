@@ -2,8 +2,6 @@
 import { forwardRef } from "react";
 import cx from "clsx";
 
-import "./Input.scss";
-
 const Input = forwardRef(function Input(props, forwardedRef) {
   const { className, ...rest } = props;
   return (

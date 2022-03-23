@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import BlockMenuItem, { Props as BlockMenuItemProps } from "./BlockMenuItem";
-import "./EmojiMenuItem.scss";
 
 const EmojiTitle = ({
   emoji,

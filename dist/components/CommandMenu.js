@@ -44,7 +44,6 @@ const VisuallyHidden_1 = __importDefault(require("./VisuallyHidden"));
 const getDataTransferFiles_1 = __importDefault(require("../lib/getDataTransferFiles"));
 const filterExcessSeparators_1 = __importDefault(require("../lib/filterExcessSeparators"));
 const insertFiles_1 = __importDefault(require("../commands/insertFiles"));
-require("./CommandMenu.scss");
 const SSR = typeof window === "undefined";
 const defaultPosition = {
     left: -1000,

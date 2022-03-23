@@ -9,8 +9,6 @@ import useComponentSize from "../hooks/useComponentSize";
 import useMediaQuery from "../hooks/useMediaQuery";
 import useViewportHeight from "../hooks/useViewportHeight";
 
-import "./FloatingToolbar.scss";
-
 const SSR = typeof window === "undefined";
 
 type Props = {

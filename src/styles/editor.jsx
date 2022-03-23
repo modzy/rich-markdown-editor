@@ -1,8 +1,6 @@
 import { forwardRef } from "react";
 import cx from "clsx";
 
-import "./editor.scss";
-
 export const StyledEditor = forwardRef(function StyledEditor(
   props,
   forwardedRef

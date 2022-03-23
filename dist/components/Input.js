@@ -16,7 +16,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const clsx_1 = __importDefault(require("clsx"));
-require("./Input.scss");
 const Input = react_1.forwardRef(function Input(props, forwardedRef) {
     const { className } = props, rest = __rest(props, ["className"]);
     return (React.createElement("input", Object.assign({ ref: forwardedRef, className: clsx_1.default("rme-Input", className) }, rest)));

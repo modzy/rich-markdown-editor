@@ -35,7 +35,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const clsx_1 = __importDefault(require("clsx"));
-require("./Flex.scss");
 function Flex(props) {
     const { column, align, justify, auto, className, style } = props, rest = __rest(props, ["column", "align", "justify", "auto", "className", "style"]);
     return (React.createElement("div", Object.assign({ style: Object.assign(Object.assign({}, style), { alignItems: align, justifyContent: justify }), className: clsx_1.default("rme-flex", className, {

@@ -3,8 +3,6 @@
 import * as React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
-import "./LinkSearchResult.scss";
-
 type Props = {
   onClick: (event: React.MouseEvent) => void;
   onMouseOver: (event: React.MouseEvent) => void;

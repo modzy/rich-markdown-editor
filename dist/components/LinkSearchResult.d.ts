@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./LinkSearchResult.scss";
 declare type Props = {
     onClick: (event: React.MouseEvent) => void;
     onMouseOver: (event: React.MouseEvent) => void;

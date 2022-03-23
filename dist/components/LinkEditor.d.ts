@@ -3,7 +3,6 @@ import { EditorView } from "prosemirror-view";
 import { Mark } from "prosemirror-model";
 import theme from "../styles/theme";
 import baseDictionary from "../dictionary";
-import "./LinkEditor.scss";
 export declare type SearchResult = {
     title: string;
     subtitle?: string;

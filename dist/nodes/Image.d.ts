@@ -2,7 +2,6 @@
 import { Plugin } from "prosemirror-state";
 import { InputRule } from "prosemirror-inputrules";
 import Node from "./Node";
-import "./Image.scss";
 export default class Image extends Node {
     get name(): string;
     get schema(): {

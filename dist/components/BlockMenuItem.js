@@ -36,7 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const smooth_scroll_into_view_if_needed_1 = __importDefault(require("smooth-scroll-into-view-if-needed"));
 const clsx_1 = __importDefault(require("clsx"));
-require("./BlockMenuItem.scss");
 function BlockMenuItem({ selected, disabled, onClick, title, shortcut, icon, containerId = "block-menu-container", }) {
     const Icon = icon;
     const ref = React.useCallback((node) => {

@@ -3,8 +3,6 @@
 import * as React from "react";
 import cx from "clsx";
 
-import "./Flex.scss";
-
 type JustifyValues =
   | "center"
   | "space-around"

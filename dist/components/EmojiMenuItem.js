@@ -24,7 +24,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const BlockMenuItem_1 = __importDefault(require("./BlockMenuItem"));
-require("./EmojiMenuItem.scss");
 const EmojiTitle = ({ emoji, title, }) => {
     return (React.createElement("p", null,
         React.createElement("span", { className: "emoji rme-EmojiMenuItem-Emoji" }, emoji),

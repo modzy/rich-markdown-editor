@@ -1,6 +1,5 @@
 import * as React from "react";
 import { EditorView } from "prosemirror-view";
-import "./FloatingToolbar.scss";
 declare type Props = {
     active?: boolean;
     view: EditorView;

@@ -1,4 +1,105 @@
-@import "../../styles/variables.scss";
+$font-family-sans: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto",
+  "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+
+$font-family-mono: ui-monospace, Menlo, Consolas, Liberation Mono, monospace;
+$color-n900: #091e42;
+$color-n800: #172b4d;
+$color-n700: #253858;
+$color-n600: #344563;
+$color-n500: #42526e;
+$color-n400: #505f79;
+$color-n300: #5e6c84;
+$color-n200: #6b778c;
+$color-n100: #7a869a;
+$color-n90: #8993a4;
+$color-n80: #97a0af;
+$color-n70: #a5adba;
+$color-n60: #b3bac5;
+$color-n50: #c1c7d0;
+$color-n40: #dfe1e6;
+$color-n30: #ebecf0;
+$color-n20: #f4f5f7;
+$color-n10: hsl(220deg, 18%, 97%);
+$color-n0: #fff;
+
+// Primary
+$color-p1000: hsl(179deg, 50%, 15%);
+$color-p950: hsl(179deg, 50%, 19%);
+$color-p900: hsl(179deg, 50%, 22%);
+$color-p800: hsl(179deg, 50%, 28%);
+$color-p700: hsl(179deg, 50%, 34%);
+$color-p600: hsl(179deg, 50%, 42%);
+$color-p500: hsl(179deg, 45%, 49%);
+$color-p400: hsl(179deg, 40%, 62%);
+$color-p300: hsl(179deg, 35%, 71%);
+$color-p200: hsl(179deg, 30%, 81%);
+$color-p100: hsl(179deg, 25%, 91%);
+$color-p50: hsl(179deg, 20%, 95%);
+$color-p0: #fff;
+
+// Critical
+$color-c1000: hsl(5deg, 50%, 15%);
+$color-c900: hsl(5deg, 50%, 22%);
+$color-c800: hsl(5deg, 50%, 28%);
+$color-c700: hsl(5deg, 50%, 34%);
+$color-c600: hsl(5deg, 50%, 42%);
+$color-c500: hsl(5deg, 50%, 49%);
+$color-c400: hsl(5deg, 50%, 62%);
+$color-c300: hsl(5deg, 50%, 71%);
+$color-c200: hsl(5deg, 50%, 81%);
+$color-c100: hsl(5deg, 50%, 91%);
+$color-c50: hsl(5deg, 50%, 95%);
+$color-c0: #fff;
+
+// Success
+$color-g1000: hsl(148deg, 40%, 15%);
+$color-g900: hsl(148deg, 40%, 23%);
+$color-g800: hsl(148deg, 40%, 30%);
+$color-g700: hsl(148deg, 40%, 36%);
+$color-g600: hsl(148deg, 40%, 44%);
+$color-g500: hsl(148deg, 40%, 52%);
+$color-g400: hsl(148deg, 40%, 62%);
+$color-g300: hsl(148deg, 40%, 71%);
+$color-g200: hsl(148deg, 40%, 81%);
+$color-g100: hsl(148deg, 40%, 91%);
+$color-g50: hsl(148deg, 30%, 95%);
+
+// Warning
+$color-w1000: hsl(35deg, 90%, 15%);
+$color-w900: hsl(35deg, 90%, 23%);
+$color-w800: hsl(36deg, 90%, 30%);
+$color-w700: hsl(37deg, 90%, 36%);
+$color-w600: hsl(38deg, 90%, 44%);
+$color-w500: hsl(39deg, 90%, 52%);
+$color-w400: hsl(41deg, 90%, 62%);
+$color-w300: hsl(43deg, 90%, 71%);
+$color-w200: hsl(45deg, 92%, 81%);
+$color-w100: hsl(46deg, 94%, 91%);
+$color-w50: hsl(47deg, 88%, 95%);
+
+// Green-saturated
+$color-gs900: #00474c;
+$color-gs800: #016468;
+$color-gs700: #0a8083;
+$color-gs600: #37a1a3;
+$color-gs500: #61bfbf;
+$color-gs400: #86d5d5;
+$color-gs300: #a7e2e2;
+$color-gs200: #ccefef;
+$color-gs100: #eafafa;
+
+// Blues
+$color-b900: #0d47a1;
+$color-b800: #1565c0;
+$color-b700: #1976d2;
+$color-b600: #1e88e5;
+$color-b500: #2196f3;
+$color-b400: #42a5f5;
+$color-b300: #64b5f6;
+$color-b200: #90caf9;
+$color-b100: #bbdefb;
+$color-b50: #e3f2fd;
 
 // colors
 $rme-black: $color-n900;

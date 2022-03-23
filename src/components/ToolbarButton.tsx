@@ -2,8 +2,6 @@
 import { forwardRef } from "react";
 import cx from "clsx";
 
-import "./ToolbarButton.scss";
-
 type Props = { active?: boolean; disabled?: boolean };
 
 const ToolbarButton = forwardRef(function ToolbarButton(
