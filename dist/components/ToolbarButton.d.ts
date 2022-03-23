@@ -1,8 +1,8 @@
-/// <reference types="react" />
+import * as React from "react";
 declare type Props = {
     active?: boolean;
     disabled?: boolean;
 };
-declare const ToolbarButton: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<unknown>>;
+declare const ToolbarButton: React.ForwardRefExoticComponent<Props & React.RefAttributes<unknown>>;
 export default ToolbarButton;
 //# sourceMappingURL=ToolbarButton.d.ts.map

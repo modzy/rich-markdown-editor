@@ -1,3 +1,4 @@
+import * as React from "react";
 import cx from "clsx";
 
 export default function Separator({ className, rest }) {

@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-import React from "react";
+import * as React from "react";
 import { findParentNode } from "prosemirror-utils";
 import CommandMenu, { Props } from "./CommandMenu";
 import BlockMenuItem from "./BlockMenuItem";

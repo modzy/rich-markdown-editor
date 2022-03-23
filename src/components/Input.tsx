@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { forwardRef } from "react";
+import * as React from "react";
 import cx from "clsx";
 
-const Input = forwardRef(function Input(props, forwardedRef) {
+const Input = React.forwardRef(function Input(props, forwardedRef) {
   const { className, ...rest } = props;
   return (
     <input

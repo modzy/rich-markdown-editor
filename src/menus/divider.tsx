@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { EditorState } from "prosemirror-state";
 import { PageBreakIcon, HorizontalRuleIcon } from "outline-icons";
 import isNodeActive from "../queries/isNodeActive";

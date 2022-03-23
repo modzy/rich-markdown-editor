@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React from "react";
+import * as React from "react";
 import gemojies from "gemoji";
 import FuzzySearch from "fuzzy-search";
 import CommandMenu, { Props } from "./CommandMenu";

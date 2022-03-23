@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { forwardRef } from "react";
+import * as React from "react";
 import cx from "clsx";
 
 type Props = { active?: boolean; disabled?: boolean };
 
-const ToolbarButton = forwardRef(function ToolbarButton(
+const ToolbarButton = React.forwardRef(function ToolbarButton(
   props: Props,
   forwardedRef
 ) {

@@ -1,4 +1,4 @@
-/// <reference types="react" />
-declare const Input: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+import * as React from "react";
+declare const Input: React.ForwardRefExoticComponent<React.RefAttributes<unknown>>;
 export default Input;
 //# sourceMappingURL=Input.d.ts.map
