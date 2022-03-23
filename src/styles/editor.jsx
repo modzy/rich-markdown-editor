@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import * as React from "react";
 import cx from "clsx";
 
-export const StyledEditor = forwardRef(function StyledEditor(
+export const StyledEditor = React.forwardRef(function StyledEditor(
   props,
   forwardedRef
 ) {
