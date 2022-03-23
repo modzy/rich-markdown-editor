@@ -1,2 +1,3 @@
-export const StyledEditor: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
+export const StyledEditor: React.ForwardRefExoticComponent<React.RefAttributes<any>>;
+import * as React from "react";
 //# sourceMappingURL=editor.d.ts.map
