@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
-import cx from "classnames";
+import cx from "clsx";
 
 import "./BlockMenuItem.scss";
 

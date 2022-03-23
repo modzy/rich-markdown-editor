@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import cx from "classnames";
+import cx from "clsx";
 
 import "./editor.scss";
 

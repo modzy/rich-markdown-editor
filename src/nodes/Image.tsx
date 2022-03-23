@@ -9,7 +9,7 @@ import getDataTransferFiles from "../lib/getDataTransferFiles";
 import uploadPlaceholderPlugin from "../lib/uploadPlaceholder";
 import insertFiles from "../commands/insertFiles";
 import Node from "./Node";
-import cx from "classnames";
+import cx from "clsx";
 
 import "./Image.scss";
 
@@ -192,75 +192,67 @@ export default class Image extends Node {
     };
   }
 
-  handleKeyDown =
-    ({ node, getPos }) =>
-    (event) => {
-      // Pressing Enter in the caption field should move the cursor/selection
-      // below the image
-      if (event.key === "Enter") {
-        event.preventDefault();
-
-        const { view } = this.editor;
-        const $pos = view.state.doc.resolve(getPos() + node.nodeSize);
-        view.dispatch(
-          view.state.tr.setSelection(new TextSelection($pos)).split($pos.pos)
-        );
-        view.focus();
-        return;
-      }
-
-      // Pressing Backspace in an an empty caption field should remove the entire
-      // image, leaving an empty paragraph
-      if (event.key === "Backspace" && event.target.innerText === "") {
-        const { view } = this.editor;
-        const $pos = view.state.doc.resolve(getPos());
-        const tr = view.state.tr.setSelection(new NodeSelection($pos));
-        view.dispatch(tr.deleteSelection());
-        view.focus();
-        return;
-      }
-    };
-
-  handleBlur =
-    ({ node, getPos }) =>
-    (event) => {
-      const alt = event.target.innerText;
-      const { src, title, layoutClass } = node.attrs;
-
-      if (alt === node.attrs.alt) return;
-
-      const { view } = this.editor;
-      const { tr } = view.state;
-
-      // update meta on object
-      const pos = getPos();
-      const transaction = tr.setNodeMarkup(pos, undefined, {
-        src,
-        alt,
-        title,
-        layoutClass,
-      });
-      view.dispatch(transaction);
-    };
-
-  handleSelect =
-    ({ getPos }) =>
-    (event) => {
+  handleKeyDown = ({ node, getPos }) => (event) => {
+    // Pressing Enter in the caption field should move the cursor/selection
+    // below the image
+    if (event.key === "Enter") {
       event.preventDefault();
 
+      const { view } = this.editor;
+      const $pos = view.state.doc.resolve(getPos() + node.nodeSize);
+      view.dispatch(
+        view.state.tr.setSelection(new TextSelection($pos)).split($pos.pos)
+      );
+      view.focus();
+      return;
+    }
+
+    // Pressing Backspace in an an empty caption field should remove the entire
+    // image, leaving an empty paragraph
+    if (event.key === "Backspace" && event.target.innerText === "") {
       const { view } = this.editor;
       const $pos = view.state.doc.resolve(getPos());
-      const transaction = view.state.tr.setSelection(new NodeSelection($pos));
-      view.dispatch(transaction);
-    };
+      const tr = view.state.tr.setSelection(new NodeSelection($pos));
+      view.dispatch(tr.deleteSelection());
+      view.focus();
+      return;
+    }
+  };
 
-  handleDownload =
-    ({ node }) =>
-    (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      downloadImageNode(node);
-    };
+  handleBlur = ({ node, getPos }) => (event) => {
+    const alt = event.target.innerText;
+    const { src, title, layoutClass } = node.attrs;
+
+    if (alt === node.attrs.alt) return;
+
+    const { view } = this.editor;
+    const { tr } = view.state;
+
+    // update meta on object
+    const pos = getPos();
+    const transaction = tr.setNodeMarkup(pos, undefined, {
+      src,
+      alt,
+      title,
+      layoutClass,
+    });
+    view.dispatch(transaction);
+  };
+
+  handleSelect = ({ getPos }) => (event) => {
+    event.preventDefault();
+
+    const { view } = this.editor;
+    const $pos = view.state.doc.resolve(getPos());
+    const transaction = view.state.tr.setSelection(new NodeSelection($pos));
+    view.dispatch(transaction);
+  };
+
+  handleDownload = ({ node }) => (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    downloadImageNode(node);
+  };
 
   component = (props) => {
     const { theme, isSelected } = props;

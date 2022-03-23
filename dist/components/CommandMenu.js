@@ -34,7 +34,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
-const classnames_1 = __importDefault(require("classnames"));
+const clsx_1 = __importDefault(require("clsx"));
 const capitalize_1 = __importDefault(require("lodash/capitalize"));
 const react_portal_1 = require("react-portal");
 const prosemirror_utils_1 = require("prosemirror-utils");
@@ -385,7 +385,7 @@ class CommandMenu extends React.Component {
 }
 const Wrapper = React.forwardRef(function Wrapper(props, forwardedRef) {
     const { active, top, bottom, left, isAbove, selectedIndex } = props, rest = __rest(props, ["active", "top", "bottom", "left", "isAbove", "selectedIndex"]);
-    return (React.createElement("div", Object.assign({ className: classnames_1.default("rme-CommandMenu-Wrapper", {
+    return (React.createElement("div", Object.assign({ className: clsx_1.default("rme-CommandMenu-Wrapper", {
             active,
             isAbove,
         }), ref: forwardedRef, style: {

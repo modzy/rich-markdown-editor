@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import * as React from "react";
-import cx from "classnames";
+import cx from "clsx";
 import capitalize from "lodash/capitalize";
 import { Portal } from "react-portal";
 import { EditorView } from "prosemirror-view";

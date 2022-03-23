@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const react_portal_1 = require("react-portal");
-const classnames_1 = __importDefault(require("classnames"));
+const clsx_1 = __importDefault(require("clsx"));
 const useComponentSize_1 = __importDefault(require("../hooks/useComponentSize"));
 const useMediaQuery_1 = __importDefault(require("../hooks/useMediaQuery"));
 const useViewportHeight_1 = __importDefault(require("../hooks/useViewportHeight"));
@@ -151,7 +151,7 @@ function FloatingToolbar(props) {
 }
 const Wrapper = React.forwardRef(function Wrapper(props, forwardedRef) {
     const { active, offset } = props, rest = __rest(props, ["active", "offset"]);
-    return (React.createElement("div", Object.assign({ ref: forwardedRef, className: classnames_1.default("rme-FloatingToolbar-Wrapper", {
+    return (React.createElement("div", Object.assign({ ref: forwardedRef, className: clsx_1.default("rme-FloatingToolbar-Wrapper", {
             active,
         }) }, rest)));
 });

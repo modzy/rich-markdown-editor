@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Portal } from "react-portal";
 import { EditorView } from "prosemirror-view";
-import cx from "classnames";
+import cx from "clsx";
 
 import useComponentSize from "../hooks/useComponentSize";
 import useMediaQuery from "../hooks/useMediaQuery";

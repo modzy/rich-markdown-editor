@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const smooth_scroll_into_view_if_needed_1 = __importDefault(require("smooth-scroll-into-view-if-needed"));
-const classnames_1 = __importDefault(require("classnames"));
+const clsx_1 = __importDefault(require("clsx"));
 require("./BlockMenuItem.scss");
 function BlockMenuItem({ selected, disabled, onClick, title, shortcut, icon, containerId = "block-menu-container", }) {
     const Icon = icon;
@@ -61,14 +61,14 @@ function BlockMenuItem({ selected, disabled, onClick, title, shortcut, icon, con
 }
 const MenuItem = React.forwardRef(function MenuItem(props, forwardedRef) {
     const { className, disabled, selected } = props, rest = __rest(props, ["className", "disabled", "selected"]);
-    return (React.createElement("button", Object.assign({ ref: forwardedRef, className: classnames_1.default("rme-blockMenuItem-menuItem", className, {
+    return (React.createElement("button", Object.assign({ ref: forwardedRef, className: clsx_1.default("rme-blockMenuItem-menuItem", className, {
             disabled,
             selected,
         }) }, rest)));
 });
 function Shortcut(_a) {
     var { className } = _a, rest = __rest(_a, ["className"]);
-    return (React.createElement("span", Object.assign({ className: classnames_1.default("rme-blockMenuItem-shortcut", className) }, rest)));
+    return (React.createElement("span", Object.assign({ className: clsx_1.default("rme-blockMenuItem-shortcut", className) }, rest)));
 }
 exports.default = BlockMenuItem;
 //# sourceMappingURL=BlockMenuItem.js.map

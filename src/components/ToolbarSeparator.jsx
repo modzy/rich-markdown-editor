@@ -1,4 +1,4 @@
-import cx from "classnames";
+import cx from "clsx";
 import "./ToolbarSeparator.scss";
 
 export default function Separator({ className, rest }) {

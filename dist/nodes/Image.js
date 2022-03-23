@@ -11,7 +11,7 @@ const getDataTransferFiles_1 = __importDefault(require("../lib/getDataTransferFi
 const uploadPlaceholder_1 = __importDefault(require("../lib/uploadPlaceholder"));
 const insertFiles_1 = __importDefault(require("../commands/insertFiles"));
 const Node_1 = __importDefault(require("./Node"));
-const classnames_1 = __importDefault(require("classnames"));
+const clsx_1 = __importDefault(require("clsx"));
 require("./Image.scss");
 const IMAGE_INPUT_REGEX = /!\[(?<alt>[^\]\[]*?)]\((?<filename>[^\]\[]*?)(?=\“|\))\“?(?<layoutclass>[^\]\[\”]+)?\”?\)$/;
 const uploadPlugin = (options) => new prosemirror_state_1.Plugin({
@@ -142,7 +142,7 @@ class Image extends Node_1.default {
             const { alt, src, title, layoutClass } = props.node.attrs;
             const className = layoutClass ? `image image-${layoutClass}` : "image";
             return (React.createElement("div", { contentEditable: false, className: className },
-                React.createElement("span", { className: classnames_1.default("rme-Image-ImageWrapper", {
+                React.createElement("span", { className: clsx_1.default("rme-Image-ImageWrapper", {
                         "ProseMirror-selectednode": isSelected,
                     }), onClick: this.handleSelect(props) },
                     React.createElement("button", { className: "rme-Image-Button" },
