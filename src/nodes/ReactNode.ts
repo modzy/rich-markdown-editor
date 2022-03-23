@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Node from "./Node";
 
 export default abstract class ReactNode extends Node {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export default function isInList(state) {
   const $head = state.selection.$head;
   for (let d = $head.depth; d > 0; d--) {

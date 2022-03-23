@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export default function getRowIndex(selection) {
   const isRowSelection = selection.isRowSelection && selection.isRowSelection();
   if (!isRowSelection) return undefined;

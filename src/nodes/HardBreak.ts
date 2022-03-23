@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Node from "./Node";
 import { isInTable } from "prosemirror-tables";
 import breakRule from "../rules/breaks";

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { toggleMark } from "prosemirror-commands";
 import Extension from "../lib/Extension";
 

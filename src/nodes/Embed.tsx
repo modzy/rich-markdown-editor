@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as React from "react";
 import Node from "./Node";
 import embedsRule from "../rules/embeds";
@@ -39,7 +41,7 @@ export default class Embed extends Node {
           },
         },
       ],
-      toDOM: node => [
+      toDOM: (node) => [
         "iframe",
         { class: "embed", src: node.attrs.href, contentEditable: false },
         0,
@@ -87,7 +89,7 @@ export default class Embed extends Node {
   }
 
   commands({ type }) {
-    return attrs => (state, dispatch) => {
+    return (attrs) => (state, dispatch) => {
       dispatch(
         state.tr.replaceSelectionWith(type.create(attrs)).scrollIntoView()
       );
@@ -106,7 +108,7 @@ export default class Embed extends Node {
   parseMarkdown() {
     return {
       node: "embed",
-      getAttrs: token => ({
+      getAttrs: (token) => ({
         href: token.attrGet("href"),
       }),
     };

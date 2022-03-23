@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { InputRule } from "prosemirror-inputrules";
 import Node from "./Node";
 
@@ -15,7 +17,7 @@ export default class HorizontalRule extends Node {
       },
       group: "block",
       parseDOM: [{ tag: "hr" }],
-      toDOM: node => {
+      toDOM: (node) => {
         return [
           "hr",
           { class: node.attrs.markup === "***" ? "page-break" : "" },
@@ -25,7 +27,7 @@ export default class HorizontalRule extends Node {
   }
 
   commands({ type }) {
-    return attrs => (state, dispatch) => {
+    return (attrs) => (state, dispatch) => {
       dispatch(
         state.tr.replaceSelectionWith(type.create(attrs)).scrollIntoView()
       );
@@ -65,7 +67,7 @@ export default class HorizontalRule extends Node {
   parseMarkdown() {
     return {
       node: "hr",
-      getAttrs: tok => ({
+      getAttrs: (tok) => ({
         markup: tok.markup,
       }),
     };

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { toggleMark } from "prosemirror-commands";
 import markInputRule from "../lib/markInputRule";
 import Mark from "./Mark";
@@ -12,7 +14,7 @@ export default class Bold extends Mark {
       parseDOM: [
         { tag: "b" },
         { tag: "strong" },
-        { style: "font-style", getAttrs: value => value === "bold" },
+        { style: "font-style", getAttrs: (value) => value === "bold" },
       ],
       toDOM: () => ["strong"],
     };

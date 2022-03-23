@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { EmbedDescriptor, MenuItem } from "../types";
 
 export default function filterExcessSeparators(

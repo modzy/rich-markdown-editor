@@ -1,0 +1,13 @@
+.rme-flex {
+  display: flex;
+  flex: initial;
+  flex-direction: row;
+
+  &.auto {
+    flex: 1 1 auto;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+}

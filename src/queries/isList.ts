@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export default function isList(node, schema) {
   return (
     node.type === schema.nodes.bullet_list ||

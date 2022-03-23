@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { wrapIn, lift } from "prosemirror-commands";
 import isNodeActive from "../queries/isNodeActive";
 

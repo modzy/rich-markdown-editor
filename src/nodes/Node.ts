@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { MarkdownSerializerState } from "prosemirror-markdown";
 import { Node as ProsemirrorNode } from "prosemirror-model";
 import Extension from "../lib/Extension";

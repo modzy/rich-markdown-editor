@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Schema } from "prosemirror-model";
 import ExtensionManager from "./lib/ExtensionManager";
 import render from "./lib/renderToHtml";

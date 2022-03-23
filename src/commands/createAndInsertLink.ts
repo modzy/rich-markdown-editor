@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { EditorView } from "prosemirror-view";
 import baseDictionary from "../dictionary";
 import { ToastType } from "../types";
@@ -9,7 +11,7 @@ function findPlaceholderLink(doc, href) {
     // get text nodes
     if (node.type.name === "text") {
       // get marks for text nodes
-      node.marks.forEach(mark => {
+      node.marks.forEach((mark) => {
         // any of the marks links?
         if (mark.type.name === "link") {
           // any of the links to other docs?
@@ -32,7 +34,7 @@ function findPlaceholderLink(doc, href) {
   return result;
 }
 
-const createAndInsertLink = async function(
+const createAndInsertLink = async function (
   view: EditorView,
   title: string,
   href: string,

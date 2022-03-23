@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /*
 Copyright 2020 Atlassian Pty Ltd
 

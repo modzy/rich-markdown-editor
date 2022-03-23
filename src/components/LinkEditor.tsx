@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as React from "react";
 import { setTextSelection } from "prosemirror-utils";
 import { EditorView } from "prosemirror-view";
@@ -9,7 +11,6 @@ import {
   TrashIcon,
   OpenIcon,
 } from "outline-icons";
-import styled, { withTheme } from "styled-components";
 import isUrl from "../lib/isUrl";
 import theme from "../styles/theme";
 import Flex from "./Flex";
@@ -17,6 +18,8 @@ import Input from "./Input";
 import ToolbarButton from "./ToolbarButton";
 import LinkSearchResult from "./LinkSearchResult";
 import baseDictionary from "../dictionary";
+
+import "./LinkEditor.scss";
 
 export type SearchResult = {
   title: string;
@@ -175,6 +178,7 @@ class LinkEditor extends React.Component<Props, State> {
 
       case "ArrowDown":
         if (event.shiftKey) return;
+        break;
       case "Tab": {
         event.preventDefault();
         event.stopPropagation();
@@ -208,7 +212,7 @@ class LinkEditor extends React.Component<Props, State> {
     if (trimmedValue && this.props.onSearchLink) {
       try {
         const results = await this.props.onSearchLink(trimmedValue);
-        this.setState(state => ({
+        this.setState((state) => ({
           results: {
             ...state.results,
             [trimmedValue]: results,
@@ -257,7 +261,7 @@ class LinkEditor extends React.Component<Props, State> {
     view.focus();
   };
 
-  handleSelectLink = (url: string, title: string) => event => {
+  handleSelectLink = (url: string, title: string) => (event) => {
     event.preventDefault();
     this.save(url, title);
 
@@ -296,7 +300,7 @@ class LinkEditor extends React.Component<Props, State> {
       !!suggestedLinkTitle && (showCreateLink || results.length > 0);
 
     return (
-      <Wrapper>
+      <Flex className="rme-LinkEditor-Wrapper">
         <Input
           value={value}
           placeholder={
@@ -312,27 +316,30 @@ class LinkEditor extends React.Component<Props, State> {
 
         <ToolbarButton onClick={this.handleOpenLink} disabled={!value}>
           <Tooltip tooltip={dictionary.openLink} placement="top">
-            <OpenIcon color={theme.toolbarItem} />
+            <OpenIcon color="var(--color-background-2)" />
           </Tooltip>
         </ToolbarButton>
         <ToolbarButton onClick={this.handleRemoveLink}>
           <Tooltip tooltip={dictionary.removeLink} placement="top">
             {this.initialValue ? (
-              <TrashIcon color={theme.toolbarItem} />
+              <TrashIcon color="var(--color-background-2)" />
             ) : (
-              <CloseIcon color={theme.toolbarItem} />
+              <CloseIcon color="var(--color-background-2)" />
             )}
           </Tooltip>
         </ToolbarButton>
 
         {showResults && (
-          <SearchResults id="link-search-results">
+          <ol
+            id="link-search-results"
+            className="rme-LinkEditor-Wrapper-SearchResults"
+          >
             {results.map((result, index) => (
               <LinkSearchResult
                 key={result.url}
                 title={result.title}
                 subtitle={result.subtitle}
-                icon={<DocumentIcon color={theme.toolbarItem} />}
+                icon={<DocumentIcon color="var(--color-background-2)" />}
                 onMouseOver={() => this.handleFocusLink(index)}
                 onClick={this.handleSelectLink(result.url, result.title)}
                 selected={index === selectedIndex}
@@ -344,7 +351,7 @@ class LinkEditor extends React.Component<Props, State> {
                 key="create"
                 title={suggestedLinkTitle}
                 subtitle={dictionary.createNewDoc}
-                icon={<PlusIcon color={theme.toolbarItem} />}
+                icon={<PlusIcon color="var(--color-background-2)" />}
                 onMouseOver={() => this.handleFocusLink(results.length)}
                 onClick={() => {
                   this.handleCreateLink(suggestedLinkTitle);
@@ -356,43 +363,11 @@ class LinkEditor extends React.Component<Props, State> {
                 selected={results.length === selectedIndex}
               />
             )}
-          </SearchResults>
+          </ol>
         )}
-      </Wrapper>
+      </Flex>
     );
   }
 }
 
-const Wrapper = styled(Flex)`
-  margin-left: -8px;
-  margin-right: -8px;
-  min-width: 336px;
-  pointer-events: all;
-`;
-
-const SearchResults = styled.ol`
-  background: ${props => props.theme.toolbarBackground};
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  height: auto;
-  left: 0;
-  padding: 4px 8px 8px;
-  margin: 0;
-  margin-top: -3px;
-  margin-bottom: 0;
-  border-radius: 0 0 4px 4px;
-  overflow-y: auto;
-  max-height: 25vh;
-
-  @media (hover: none) and (pointer: coarse) {
-    position: fixed;
-    top: auto;
-    bottom: 40px;
-    border-radius: 0;
-    max-height: 50vh;
-    padding: 8px 8px 4px;
-  }
-`;
-
-export default withTheme(LinkEditor);
+export default LinkEditor;

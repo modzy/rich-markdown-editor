@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import refractor from "refractor/core";
 import bash from "refractor/lang/bash";
 import css from "refractor/lang/css";
@@ -8,18 +10,15 @@ import java from "refractor/lang/java";
 import javascript from "refractor/lang/javascript";
 import json from "refractor/lang/json";
 import markup from "refractor/lang/markup";
-import objectivec from "refractor/lang/objectivec";
 import perl from "refractor/lang/perl";
 import php from "refractor/lang/php";
 import python from "refractor/lang/python";
 import powershell from "refractor/lang/powershell";
 import ruby from "refractor/lang/ruby";
-import rust from "refractor/lang/rust";
 import sql from "refractor/lang/sql";
 import typescript from "refractor/lang/typescript";
 import yaml from "refractor/lang/yaml";
 
-import { Selection, TextSelection, Transaction } from "prosemirror-state";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 import copy from "copy-to-clipboard";
 import Prism, { LANGUAGES } from "../plugins/Prism";
@@ -41,13 +40,11 @@ const DEFAULT_LANGUAGE = "javascript";
   javascript,
   json,
   markup,
-  objectivec,
   perl,
   php,
   python,
   powershell,
   ruby,
-  rust,
   sql,
   typescript,
   yaml,
@@ -88,7 +85,7 @@ export default class CodeFence extends Node {
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const button = document.createElement("button");
         button.innerText = "Copy";
         button.type = "button";
@@ -117,7 +114,7 @@ export default class CodeFence extends Node {
   }
 
   commands({ type, schema }) {
-    return attrs =>
+    return (attrs) =>
       toggleBlockType(type, schema.nodes.paragraph, {
         language: localStorage?.getItem(PERSISTENCE_KEY) || DEFAULT_LANGUAGE,
         ...attrs,
@@ -129,23 +126,9 @@ export default class CodeFence extends Node {
       "Shift-Ctrl-\\": toggleBlockType(type, schema.nodes.paragraph),
       "Shift-Enter": (state, dispatch) => {
         if (!isInCode(state)) return false;
-        const {
-          tr,
-          selection,
-        }: { tr: Transaction; selection: TextSelection } = state;
-        const text = selection?.$anchor?.nodeBefore?.text;
 
-        let newText = "\n";
-
-        if (text) {
-          const splitByNewLine = text.split("\n");
-          const numOfSpaces = splitByNewLine[splitByNewLine.length - 1].search(
-            /\S|$/
-          );
-          newText += " ".repeat(numOfSpaces);
-        }
-
-        dispatch(tr.insertText(newText, selection.from, selection.to));
+        const { tr, selection } = state;
+        dispatch(tr.insertText("\n", selection.from, selection.to));
         return true;
       },
       Tab: (state, dispatch) => {
@@ -158,7 +141,7 @@ export default class CodeFence extends Node {
     };
   }
 
-  handleCopyToClipboard = event => {
+  handleCopyToClipboard = (event) => {
     const { view } = this.editor;
     const element = event.target;
     const { top, left } = element.getBoundingClientRect();
@@ -178,7 +161,7 @@ export default class CodeFence extends Node {
     }
   };
 
-  handleLanguageChange = event => {
+  handleLanguageChange = (event) => {
     const { view } = this.editor;
     const { tr } = view.state;
     const element = event.target;
@@ -187,12 +170,9 @@ export default class CodeFence extends Node {
 
     if (result) {
       const language = element.value;
-
-      const transaction = tr
-        .setSelection(Selection.near(view.state.doc.resolve(result.inside)))
-        .setNodeMarkup(result.inside, undefined, {
-          language,
-        });
+      const transaction = tr.setNodeMarkup(result.inside, undefined, {
+        language,
+      });
       view.dispatch(transaction);
 
       localStorage?.setItem(PERSISTENCE_KEY, language);
@@ -222,7 +202,7 @@ export default class CodeFence extends Node {
   parseMarkdown() {
     return {
       block: "code_block",
-      getAttrs: tok => ({ language: tok.info }),
+      getAttrs: (tok) => ({ language: tok.info }),
     };
   }
 }

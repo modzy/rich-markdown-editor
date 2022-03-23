@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { EditorState } from "prosemirror-state";
 import { TrashIcon, InsertAboveIcon, InsertBelowIcon } from "outline-icons";
 import { MenuItem } from "../types";

@@ -1,4 +1,6 @@
-/* global window File Promise */
+// cSpell:disable
+// @ts-nocheck
+
 import * as React from "react";
 import memoize from "lodash/memoize";
 import { EditorState, Selection, Plugin } from "prosemirror-state";
@@ -11,8 +13,6 @@ import { inputRules, InputRule } from "prosemirror-inputrules";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 import { selectColumn, selectRow, selectTable } from "prosemirror-utils";
-import { ThemeProvider } from "styled-components";
-import { light as lightTheme, dark as darkTheme } from "./styles/theme";
 import baseDictionary from "./dictionary";
 import Flex from "./components/Flex";
 import { SearchResult } from "./components/LinkEditor";
@@ -78,18 +78,18 @@ import TrailingNode from "./plugins/TrailingNode";
 import PasteHandler from "./plugins/PasteHandler";
 import { PluginSimple } from "markdown-it";
 
+import "./index.scss";
+
 export { schema, parser, serializer, renderToHtml } from "./server";
 
 export { default as Extension } from "./lib/Extension";
-
-export const theme = lightTheme;
 
 export type Props = {
   id?: string;
   value?: string;
   defaultValue: string;
   placeholder: string;
-  extensions?: Extension[];
+  extensions: Extension[];
   disableExtensions?: (
     | "strong"
     | "code_inline"
@@ -126,7 +126,6 @@ export type Props = {
   dictionary?: Partial<typeof baseDictionary>;
   dark?: boolean;
   dir?: string;
-  theme?: typeof theme;
   template?: boolean;
   headingsOffset?: number;
   maxLength?: number;
@@ -180,7 +179,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
     onImageUploadStop: () => {
       // no default behavior
     },
-    onClickLink: href => {
+    onClickLink: (href) => {
       window.open(href, "_blank");
     },
     embeds: [],
@@ -402,7 +401,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
           new MaxLength({
             maxLength: this.props.maxLength,
           }),
-        ].filter(extension => {
+        ].filter((extension) => {
           // Optionaly disable extensions
           if (this.props.disableExtensions) {
             return !(this.props.disableExtensions as string[]).includes(
@@ -411,7 +410,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
           }
           return true;
         }),
-        ...(this.props.extensions || []),
+        ...this.props.extensions,
       ],
       this
     );
@@ -509,7 +508,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       plugins: [
         ...this.plugins,
         ...this.keymaps,
-        dropCursor({ color: this.theme().cursor }),
+        dropCursor({ color: "#000" }),
         gapCursor(),
         inputRules({
           rules: this.inputRules,
@@ -528,7 +527,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       throw new Error("createView called before ref available");
     }
 
-    const isEditingCheckbox = tr => {
+    const isEditingCheckbox = (tr) => {
       return tr.steps.some(
         (step: Step) =>
           step.slice?.content?.firstChild?.type.name ===
@@ -542,11 +541,10 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       editable: () => !this.props.readOnly,
       nodeViews: this.nodeViews,
       handleDOMEvents: this.props.handleDOMEvents,
-      dispatchTransaction: function(transaction) {
+      dispatchTransaction: function (transaction) {
         // callback is bound to have the view instance as its this binding
-        const { state, transactions } = this.state.applyTransaction(
-          transaction
-        );
+        const { state, transactions } =
+          this.state.applyTransaction(transaction);
 
         this.updateState(state);
 
@@ -554,7 +552,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
         // changing then call our own change handler to let the outside world
         // know
         if (
-          transactions.some(tr => tr.docChanged) &&
+          transactions.some((tr) => tr.docChanged) &&
           (!self.props.readOnly ||
             (self.props.readOnlyWriteCheckboxes &&
               transactions.some(isEditingCheckbox)))
@@ -692,7 +690,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
     const headings: { title: string; level: number; id: string }[] = [];
     const previouslySeen = {};
 
-    this.view.state.doc.forEach(node => {
+    this.view.state.doc.forEach((node) => {
       if (node.type.name === "heading") {
         // calculate the optimal slug
         const slug = headingToSlug(node);
@@ -717,10 +715,6 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       }
     });
     return headings;
-  };
-
-  theme = () => {
-    return this.props.theme || (this.props.dark ? darkTheme : lightTheme);
   };
 
   dictionary = memoize(
@@ -752,69 +746,67 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
         dir={dir}
         column
       >
-        <ThemeProvider theme={this.theme()}>
-          <React.Fragment>
-            <StyledEditor
-              dir={dir}
-              rtl={isRTL}
-              readOnly={readOnly}
-              readOnlyWriteCheckboxes={readOnlyWriteCheckboxes}
-              ref={ref => (this.element = ref)}
-            />
-            {!readOnly && this.view && (
-              <React.Fragment>
-                <SelectionToolbar
-                  view={this.view}
-                  dictionary={dictionary}
-                  commands={this.commands}
-                  rtl={isRTL}
-                  isTemplate={this.props.template === true}
-                  onOpen={this.handleOpenSelectionMenu}
-                  onClose={this.handleCloseSelectionMenu}
-                  onSearchLink={this.props.onSearchLink}
-                  onClickLink={this.props.onClickLink}
-                  onCreateLink={this.props.onCreateLink}
-                  tooltip={tooltip}
-                />
-                <LinkToolbar
-                  view={this.view}
-                  dictionary={dictionary}
-                  isActive={this.state.linkMenuOpen}
-                  onCreateLink={this.props.onCreateLink}
-                  onSearchLink={this.props.onSearchLink}
-                  onClickLink={this.props.onClickLink}
-                  onShowToast={this.props.onShowToast}
-                  onClose={this.handleCloseLinkMenu}
-                  tooltip={tooltip}
-                />
-                <EmojiMenu
-                  view={this.view}
-                  commands={this.commands}
-                  dictionary={dictionary}
-                  rtl={isRTL}
-                  isActive={this.state.emojiMenuOpen}
-                  search={this.state.blockMenuSearch}
-                  onClose={() => this.setState({ emojiMenuOpen: false })}
-                />
-                <BlockMenu
-                  view={this.view}
-                  commands={this.commands}
-                  dictionary={dictionary}
-                  rtl={isRTL}
-                  isActive={this.state.blockMenuOpen}
-                  search={this.state.blockMenuSearch}
-                  onClose={this.handleCloseBlockMenu}
-                  uploadImage={this.props.uploadImage}
-                  onLinkToolbarOpen={this.handleOpenLinkMenu}
-                  onImageUploadStart={this.props.onImageUploadStart}
-                  onImageUploadStop={this.props.onImageUploadStop}
-                  onShowToast={this.props.onShowToast}
-                  embeds={this.props.embeds}
-                />
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </ThemeProvider>
+        <React.Fragment>
+          <StyledEditor
+            dir={dir}
+            rtl={isRTL}
+            readOnly={readOnly}
+            readOnlyWriteCheckboxes={readOnlyWriteCheckboxes}
+            ref={(ref) => (this.element = ref)}
+          />
+          {!readOnly && this.view && (
+            <React.Fragment>
+              <SelectionToolbar
+                view={this.view}
+                dictionary={dictionary}
+                commands={this.commands}
+                rtl={isRTL}
+                isTemplate={this.props.template === true}
+                onOpen={this.handleOpenSelectionMenu}
+                onClose={this.handleCloseSelectionMenu}
+                onSearchLink={this.props.onSearchLink}
+                onClickLink={this.props.onClickLink}
+                onCreateLink={this.props.onCreateLink}
+                tooltip={tooltip}
+              />
+              <LinkToolbar
+                view={this.view}
+                dictionary={dictionary}
+                isActive={this.state.linkMenuOpen}
+                onCreateLink={this.props.onCreateLink}
+                onSearchLink={this.props.onSearchLink}
+                onClickLink={this.props.onClickLink}
+                onShowToast={this.props.onShowToast}
+                onClose={this.handleCloseLinkMenu}
+                tooltip={tooltip}
+              />
+              <EmojiMenu
+                view={this.view}
+                commands={this.commands}
+                dictionary={dictionary}
+                rtl={isRTL}
+                isActive={this.state.emojiMenuOpen}
+                search={this.state.blockMenuSearch}
+                onClose={() => this.setState({ emojiMenuOpen: false })}
+              />
+              <BlockMenu
+                view={this.view}
+                commands={this.commands}
+                dictionary={dictionary}
+                rtl={isRTL}
+                isActive={this.state.blockMenuOpen}
+                search={this.state.blockMenuSearch}
+                onClose={this.handleCloseBlockMenu}
+                uploadImage={this.props.uploadImage}
+                onLinkToolbarOpen={this.handleOpenLinkMenu}
+                onImageUploadStart={this.props.onImageUploadStart}
+                onImageUploadStop={this.props.onImageUploadStop}
+                onShowToast={this.props.onShowToast}
+                embeds={this.props.embeds}
+              />
+            </React.Fragment>
+          )}
+        </React.Fragment>
       </Flex>
     );
   }

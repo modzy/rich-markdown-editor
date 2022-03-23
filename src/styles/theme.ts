@@ -1,3 +1,5 @@
+// cSpell:disable
+
 const colors = {
   almostBlack: "#181A1B",
   lightBlack: "#2F3336",

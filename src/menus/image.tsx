@@ -1,7 +1,8 @@
+// @ts-nocheck
+
 import {
   TrashIcon,
   DownloadIcon,
-  ReplaceIcon,
   AlignImageLeftIcon,
   AlignImageRightIcon,
   AlignImageCenterIcon,
@@ -36,7 +37,7 @@ export default function imageMenuItems(
       tooltip: dictionary.alignCenter,
       icon: AlignImageCenterIcon,
       visible: true,
-      active: state =>
+      active: (state) =>
         isNodeActive(schema.nodes.image)(state) &&
         !isLeftAligned(state) &&
         !isRightAligned(state),
@@ -57,13 +58,6 @@ export default function imageMenuItems(
       tooltip: dictionary.downloadImage,
       icon: DownloadIcon,
       visible: !!fetch,
-      active: () => false,
-    },
-    {
-      name: "replaceImage",
-      tooltip: dictionary.replaceImage,
-      icon: ReplaceIcon,
-      visible: true,
       active: () => false,
     },
     {

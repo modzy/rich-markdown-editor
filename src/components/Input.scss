@@ -1,0 +1,17 @@
+@import "../rme-variables.scss";
+
+.rme-Input {
+  font-size: 15px;
+  background: $rme-toolbarInput;
+  color: $rme-toolbarItem;
+  border-radius: 2px;
+  padding: 3px 8px;
+  border: 0;
+  margin: 0;
+  outline: none;
+  flex-grow: 1;
+
+  @media (hover: none) and (pointer: coarse) {
+    font-size: 16px;
+  }
+}

@@ -1,13 +1,17 @@
-import * as React from "react";
+// @ts-nocheck
+
+// import * as React from "react";
 import { DownloadIcon } from "outline-icons";
 import { Plugin, TextSelection, NodeSelection } from "prosemirror-state";
 import { InputRule } from "prosemirror-inputrules";
-import styled from "styled-components";
 import ImageZoom from "react-medium-image-zoom";
 import getDataTransferFiles from "../lib/getDataTransferFiles";
 import uploadPlaceholderPlugin from "../lib/uploadPlaceholder";
 import insertFiles from "../commands/insertFiles";
 import Node from "./Node";
+import cx from "classnames";
+
+import "./Image.scss";
 
 /**
  * Matches following attributes in Markdown-typed image: [, alt, src, class]
@@ -17,9 +21,11 @@ import Node from "./Node";
  * ![](image.jpg "class") -> [, "", "image.jpg", "small"]
  * ![Lorem](image.jpg "class") -> [, "Lorem", "image.jpg", "small"]
  */
-const IMAGE_INPUT_REGEX = /!\[(?<alt>[^\]\[]*?)]\((?<filename>[^\]\[]*?)(?=\“|\))\“?(?<layoutclass>[^\]\[\”]+)?\”?\)$/;
+const IMAGE_INPUT_REGEX =
+  // eslint-disable-next-line no-useless-escape
+  /!\[(?<alt>[^\]\[]*?)]\((?<filename>[^\]\[]*?)(?=\“|\))\“?(?<layoutclass>[^\]\[\”]+)?\”?\)$/;
 
-const uploadPlugin = options =>
+const uploadPlugin = (options) =>
   new Plugin({
     props: {
       handleDOMEvents: {
@@ -36,8 +42,8 @@ const uploadPlugin = options =>
           // check if we actually pasted any files
           const files = Array.prototype.slice
             .call(event.clipboardData.items)
-            .map(dt => dt.getAsFile())
-            .filter(file => file);
+            .map((dt) => dt.getAsFile())
+            .filter((file) => file);
 
           if (files.length === 0) return false;
 
@@ -59,7 +65,7 @@ const uploadPlugin = options =>
           }
 
           // filter to only include image files
-          const files = getDataTransferFiles(event).filter(file =>
+          const files = getDataTransferFiles(event).filter((file) =>
             /image/i.test(file.type)
           );
           if (files.length === 0) {
@@ -84,7 +90,7 @@ const uploadPlugin = options =>
   });
 
 const IMAGE_CLASSES = ["right-50", "left-50"];
-const getLayoutAndTitle = tokenTitle => {
+const getLayoutAndTitle = (tokenTitle) => {
   if (!tokenTitle) return {};
   if (IMAGE_CLASSES.includes(tokenTitle)) {
     return {
@@ -97,7 +103,7 @@ const getLayoutAndTitle = tokenTitle => {
   }
 };
 
-const downloadImageNode = async node => {
+const downloadImageNode = async (node) => {
   const image = await fetch(node.attrs.src);
   const imageBlob = await image.blob();
   const imageURL = URL.createObjectURL(imageBlob);
@@ -170,7 +176,7 @@ export default class Image extends Node {
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const className = node.attrs.layoutClass
           ? `image image-${node.attrs.layoutClass}`
           : "image";
@@ -186,85 +192,95 @@ export default class Image extends Node {
     };
   }
 
-  handleKeyDown = ({ node, getPos }) => event => {
-    // Pressing Enter in the caption field should move the cursor/selection
-    // below the image
-    if (event.key === "Enter") {
+  handleKeyDown =
+    ({ node, getPos }) =>
+    (event) => {
+      // Pressing Enter in the caption field should move the cursor/selection
+      // below the image
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const { view } = this.editor;
+        const $pos = view.state.doc.resolve(getPos() + node.nodeSize);
+        view.dispatch(
+          view.state.tr.setSelection(new TextSelection($pos)).split($pos.pos)
+        );
+        view.focus();
+        return;
+      }
+
+      // Pressing Backspace in an an empty caption field should remove the entire
+      // image, leaving an empty paragraph
+      if (event.key === "Backspace" && event.target.innerText === "") {
+        const { view } = this.editor;
+        const $pos = view.state.doc.resolve(getPos());
+        const tr = view.state.tr.setSelection(new NodeSelection($pos));
+        view.dispatch(tr.deleteSelection());
+        view.focus();
+        return;
+      }
+    };
+
+  handleBlur =
+    ({ node, getPos }) =>
+    (event) => {
+      const alt = event.target.innerText;
+      const { src, title, layoutClass } = node.attrs;
+
+      if (alt === node.attrs.alt) return;
+
+      const { view } = this.editor;
+      const { tr } = view.state;
+
+      // update meta on object
+      const pos = getPos();
+      const transaction = tr.setNodeMarkup(pos, undefined, {
+        src,
+        alt,
+        title,
+        layoutClass,
+      });
+      view.dispatch(transaction);
+    };
+
+  handleSelect =
+    ({ getPos }) =>
+    (event) => {
       event.preventDefault();
 
       const { view } = this.editor;
-      const $pos = view.state.doc.resolve(getPos() + node.nodeSize);
-      view.dispatch(
-        view.state.tr.setSelection(new TextSelection($pos)).split($pos.pos)
-      );
-      view.focus();
-      return;
-    }
-
-    // Pressing Backspace in an an empty caption field should remove the entire
-    // image, leaving an empty paragraph
-    if (event.key === "Backspace" && event.target.innerText === "") {
-      const { view } = this.editor;
       const $pos = view.state.doc.resolve(getPos());
-      const tr = view.state.tr.setSelection(new NodeSelection($pos));
-      view.dispatch(tr.deleteSelection());
-      view.focus();
-      return;
-    }
-  };
+      const transaction = view.state.tr.setSelection(new NodeSelection($pos));
+      view.dispatch(transaction);
+    };
 
-  handleBlur = ({ node, getPos }) => event => {
-    const alt = event.target.innerText;
-    const { src, title, layoutClass } = node.attrs;
+  handleDownload =
+    ({ node }) =>
+    (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      downloadImageNode(node);
+    };
 
-    if (alt === node.attrs.alt) return;
-
-    const { view } = this.editor;
-    const { tr } = view.state;
-
-    // update meta on object
-    const pos = getPos();
-    const transaction = tr.setNodeMarkup(pos, undefined, {
-      src,
-      alt,
-      title,
-      layoutClass,
-    });
-    view.dispatch(transaction);
-  };
-
-  handleSelect = ({ getPos }) => event => {
-    event.preventDefault();
-
-    const { view } = this.editor;
-    const $pos = view.state.doc.resolve(getPos());
-    const transaction = view.state.tr.setSelection(new NodeSelection($pos));
-    view.dispatch(transaction);
-  };
-
-  handleDownload = ({ node }) => event => {
-    event.preventDefault();
-    event.stopPropagation();
-    downloadImageNode(node);
-  };
-
-  component = props => {
+  component = (props) => {
     const { theme, isSelected } = props;
     const { alt, src, title, layoutClass } = props.node.attrs;
     const className = layoutClass ? `image image-${layoutClass}` : "image";
 
     return (
       <div contentEditable={false} className={className}>
-        <ImageWrapper
-          className={isSelected ? "ProseMirror-selectednode" : ""}
+        <span
+          className={cx("rme-Image-ImageWrapper", {
+            "ProseMirror-selectednode": isSelected,
+          })}
           onClick={this.handleSelect(props)}
         >
-          <Button>
+          <button className="rme-Image-Button">
             <DownloadIcon
               color="currentColor"
               onClick={this.handleDownload(props)}
             />
-          </Button>
+          </button>
           <ImageZoom
             image={{
               src,
@@ -278,11 +294,11 @@ export default class Image extends Node {
             }}
             shouldRespectMaxDimension
           />
-        </ImageWrapper>
-        <Caption
+        </span>
+        <p
           onKeyDown={this.handleKeyDown(props)}
           onBlur={this.handleBlur(props)}
-          className="caption"
+          className="rme-Image-Caption caption"
           tabIndex={-1}
           role="textbox"
           contentEditable
@@ -290,7 +306,7 @@ export default class Image extends Node {
           data-caption={this.options.dictionary.imageCaptionPlaceholder}
         >
           {alt}
-        </Caption>
+        </p>
       </div>
     );
   };
@@ -313,7 +329,7 @@ export default class Image extends Node {
   parseMarkdown() {
     return {
       node: "image",
-      getAttrs: token => {
+      getAttrs: (token) => {
         return {
           src: token.attrGet("src"),
           alt: (token.children[0] && token.children[0].content) || null,
@@ -325,7 +341,7 @@ export default class Image extends Node {
 
   commands({ type }) {
     return {
-      downloadImage: () => async state => {
+      downloadImage: () => async (state) => {
         const { node } = state.selection;
 
         if (node.type.name !== "image") {
@@ -360,43 +376,13 @@ export default class Image extends Node {
         dispatch(state.tr.setNodeMarkup(selection.from, undefined, attrs));
         return true;
       },
-      replaceImage: () => state => {
-        const { view } = this.editor;
-        const {
-          uploadImage,
-          onImageUploadStart,
-          onImageUploadStop,
-          onShowToast,
-        } = this.editor.props;
-
-        if (!uploadImage) {
-          throw new Error("uploadImage prop is required to replace images");
-        }
-
-        // create an input element and click to trigger picker
-        const inputElement = document.createElement("input");
-        inputElement.type = "file";
-        inputElement.accept = "image/*";
-        inputElement.onchange = (event: Event) => {
-          const files = getDataTransferFiles(event);
-          insertFiles(view, event, state.selection.from, files, {
-            uploadImage,
-            onImageUploadStart,
-            onImageUploadStop,
-            onShowToast,
-            dictionary: this.options.dictionary,
-            replaceExisting: true,
-          });
-        };
-        inputElement.click();
-      },
       alignCenter: () => (state, dispatch) => {
         const attrs = { ...state.selection.node.attrs, layoutClass: null };
         const { selection } = state;
         dispatch(state.tr.setNodeMarkup(selection.from, undefined, attrs));
         return true;
       },
-      createImage: attrs => (state, dispatch) => {
+      createImage: (attrs) => (state, dispatch) => {
         const { selection } = state;
         const position = selection.$cursor
           ? selection.$cursor.pos
@@ -437,73 +423,38 @@ export default class Image extends Node {
   }
 }
 
-const Button = styled.button`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  border-radius: 4px;
-  background: ${props => props.theme.background};
-  color: ${props => props.theme.textSecondary};
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 100ms ease-in-out;
+// const ImageWrapper = styled.span`
+//   line-height: 0;
+//   display: inline-block;
+//   position: relative;
 
-  &:active {
-    transform: scale(0.98);
-  }
+//   &:hover {
+//     ${Button} {
+//       opacity: 0.9;
+//     }
+//   }
+// `;
 
-  &:hover {
-    color: ${props => props.theme.text};
-    opacity: 1;
-  }
-`;
+// const Caption = styled.p`
+//   border: 0;
+//   display: block;
+//   font-size: 13px;
+//   font-style: italic;
+//   font-weight: normal;
+//   color: ${(props) => props.theme.textSecondary};
+//   padding: 2px 0;
+//   line-height: 16px;
+//   text-align: center;
+//   min-height: 1em;
+//   outline: none;
+//   background: none;
+//   resize: none;
+//   user-select: text;
+//   cursor: text;
 
-const Caption = styled.p`
-  border: 0;
-  display: block;
-  font-size: 13px;
-  font-style: italic;
-  font-weight: normal;
-  color: ${props => props.theme.textSecondary};
-  padding: 2px 0;
-  line-height: 16px;
-  text-align: center;
-  min-height: 1em;
-  outline: none;
-  background: none;
-  resize: none;
-  user-select: text;
-  cursor: text;
-
-  &:empty:not(:focus) {
-    visibility: hidden;
-  }
-
-  &:empty:before {
-    color: ${props => props.theme.placeholder};
-    content: attr(data-caption);
-    pointer-events: none;
-  }
-`;
-
-const ImageWrapper = styled.span`
-  line-height: 0;
-  display: inline-block;
-  position: relative;
-
-  &:hover {
-    ${Button} {
-      opacity: 0.9;
-    }
-  }
-
-  &.ProseMirror-selectednode + ${Caption} {
-    visibility: visible;
-  }
-`;
+//   &:empty:before {
+//     color: ${(props) => props.theme.placeholder};
+//     content: attr(data-caption);
+//     pointer-events: none;
+//   }
+// `;

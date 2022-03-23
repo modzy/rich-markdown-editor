@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export default function getColumnIndex(selection) {
   const isColSelection = selection.isColSelection && selection.isColSelection();
   if (!isColSelection) return undefined;

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import createMarkdown from "./markdown/rules";
 import { PluginSimple } from "markdown-it";
 import markRule from "../rules/mark";
@@ -7,7 +9,7 @@ import breakRule from "../rules/breaks";
 import tablesRule from "../rules/tables";
 import noticesRule from "../rules/notices";
 import underlinesRule from "../rules/underlines";
-import emojiRule from "../rules/emoji";
+import emojiRule from "markdown-it-emoji";
 
 const defaultRules = [
   embedsRule,
@@ -25,7 +27,5 @@ export default function renderToHtml(
   markdown: string,
   rulePlugins: PluginSimple[] = defaultRules
 ): string {
-  return createMarkdown({ plugins: rulePlugins })
-    .render(markdown)
-    .trim();
+  return createMarkdown({ plugins: rulePlugins }).render(markdown).trim();
 }

@@ -1,10 +1,12 @@
+// @ts-nocheck
+
 import customFence from "markdown-it-container";
 
 export default function notice(md): void {
   return customFence(md, "notice", {
     marker: ":",
     validate: () => true,
-    render: function(tokens, idx) {
+    render: function (tokens, idx) {
       const { info } = tokens[idx];
 
       if (tokens[idx].nesting === 1) {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { setBlockType } from "prosemirror-commands";
 import isNodeActive from "../queries/isNodeActive";
 

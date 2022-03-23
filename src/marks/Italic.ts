@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { toggleMark } from "prosemirror-commands";
 import markInputRule from "../lib/markInputRule";
 import Mark from "./Mark";
@@ -12,7 +14,7 @@ export default class Italic extends Mark {
       parseDOM: [
         { tag: "i" },
         { tag: "em" },
-        { style: "font-style", getAttrs: value => value === "italic" },
+        { style: "font-style", getAttrs: (value) => value === "italic" },
       ],
       toDOM: () => ["em"],
     };

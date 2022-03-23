@@ -1,5 +1,9 @@
+// @ts-nocheck
+
 import * as React from "react";
-import styled from "styled-components";
+import cx from "classnames";
+
+import "./Flex.scss";
 
 type JustifyValues =
   | "center"
@@ -25,12 +29,19 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const Flex = styled.div<Props>`
-  display: flex;
-  flex: ${({ auto }: Props) => (auto ? "1 1 auto" : "initial")};
-  flex-direction: ${({ column }: Props) => (column ? "column" : "row")};
-  align-items: ${({ align }: Props) => align};
-  justify-content: ${({ justify }: Props) => justify};
-`;
+function Flex(props: Props) {
+  const { column, align, justify, auto, className, style, ...rest } = props;
+
+  return (
+    <div
+      style={{ ...style, alignItems: align, justifyContent: justify }}
+      className={cx("rme-flex", className, {
+        auto,
+        column,
+      })}
+      {...rest}
+    />
+  );
+}
 
 export default Flex;

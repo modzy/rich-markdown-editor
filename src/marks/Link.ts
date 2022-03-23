@@ -1,7 +1,10 @@
+// @ts-nocheck
+
 import { toggleMark } from "prosemirror-commands";
 import { Plugin } from "prosemirror-state";
 import { InputRule } from "prosemirror-inputrules";
 import Mark from "./Mark";
+import isModKey from "../lib/isModKey";
 
 const LINK_INPUT_REGEX = /\[([^[]+)]\((\S+)\)$/;
 
@@ -48,7 +51,7 @@ export default class Link extends Mark {
           }),
         },
       ],
-      toDOM: node => [
+      toDOM: (node) => [
         "a",
         {
           ...node.attrs,
@@ -100,7 +103,7 @@ export default class Link extends Mark {
       new Plugin({
         props: {
           handleDOMEvents: {
-            mouseover: (_view, event: MouseEvent) => {
+            mouseover: (view, event: MouseEvent) => {
               if (
                 event.target instanceof HTMLAnchorElement &&
                 !event.target.className.includes("ProseMirror-widget")
@@ -111,7 +114,16 @@ export default class Link extends Mark {
               }
               return false;
             },
-            click: (_view, event: MouseEvent) => {
+            click: (view, event: MouseEvent) => {
+              // allow opening links in editing mode with the meta/cmd key
+              if (
+                view.props.editable &&
+                view.props.editable(view.state) &&
+                !isModKey(event)
+              ) {
+                return false;
+              }
+
               if (event.target instanceof HTMLAnchorElement) {
                 const href =
                   event.target.href ||
@@ -162,7 +174,7 @@ export default class Link extends Mark {
   parseMarkdown() {
     return {
       mark: "link",
-      getAttrs: tok => ({
+      getAttrs: (tok) => ({
         href: tok.attrGet("href"),
         title: tok.attrGet("title") || null,
       }),

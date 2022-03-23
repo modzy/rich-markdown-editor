@@ -1,0 +1,88 @@
+@import "../../styles/variables.scss";
+
+// colors
+$rme-black: $color-n900;
+$rme-almostBlack: $color-n800;
+$rme-lightBlack: $color-n600;
+$rme-white: #fff;
+$rme-white10: rgba(255, 255, 255, 0.1);
+// $rme-black10: rgba(0, 0, 0, 0.1);
+$rme-primary: $color-p700;
+$rme-greyLight: $color-n20;
+$rme-grey: $color-n30;
+$rme-greyMid: $color-n40;
+
+// base
+$rme-fontWeight: 400;
+$rme-zIndex: 100;
+$rme-link: $rme-primary;
+$rme-placeholder: #b1becc;
+$rme-textSecondary: #4e5c6e;
+$rme-textLight: $rme-white;
+$rme-textHighlight: #ffdb80;
+$rme-textHighlightForeground: $rme-black;
+$rme-selected: $rme-primary;
+$rme-codeComment: #6a737d;
+$rme-codePunctuation: #5e6687;
+$rme-codeNumber: #d73a49;
+$rme-codeProperty: #c08b30;
+$rme-codeTag: #3d8fd1;
+$rme-codeString: #032f62;
+$rme-codeSelector: #6679cc;
+$rme-codeAttr: #c76b29;
+$rme-codeEntity: #22a2c9;
+$rme-codeKeyword: #d73a49;
+$rme-codeFunction: #6f42c1;
+$rme-codeStatement: #22a2c9;
+$rme-codePlaceholder: #3d8fd1;
+$rme-codeInserted: #202746;
+$rme-codeImportant: #c94922;
+
+$rme-blockToolbarBackground: $rme-white;
+$rme-blockToolbarTrigger: $rme-greyMid;
+$rme-blockToolbarTriggerIcon: $rme-white;
+$rme-blockToolbarItem: $rme-almostBlack;
+
+// Not sure what is up this blockToolbarIcon ... it was set to undefined in the original code.
+// making it almostBlack for now
+$rme-blockToolbarIcon: $rme-almostBlack;
+
+$rme-blockToolbarIconSelected: $rme-black;
+$rme-blockToolbarText: $rme-almostBlack;
+$rme-blockToolbarTextSelected: $rme-black;
+$rme-blockToolbarSelectedBackground: $rme-greyMid;
+$rme-blockToolbarHoverBackground: $rme-greyLight;
+$rme-blockToolbarDivider: $rme-greyMid;
+
+$rme-noticeInfoBackground: $color-b100;
+$rme-noticeInfoText: $rme-almostBlack;
+$rme-noticeTipBackground: $color-g200;
+$rme-noticeTipText: $rme-almostBlack;
+$rme-noticeWarningBackground: $color-w200;
+$rme-noticeWarningText: $rme-almostBlack;
+
+// light-specific theme
+$rme-background: $rme-white;
+$rme-text: $rme-almostBlack;
+$rme-code: $rme-lightBlack;
+$rme-cursor: $rme-black;
+$rme-divider: $rme-greyMid;
+
+$rme-toolbarBackground: $rme-almostBlack;
+$rme-toolbarHoverBackground: $rme-black;
+$rme-toolbarInput: $rme-white10;
+$rme-toolbarItem: $rme-white;
+
+$rme-tableDivider: $rme-greyMid;
+$rme-tableSelected: $rme-primary;
+$rme-tableSelectedBackground: $color-n20;
+$rme-tableHeaderBackground: $color-n20;
+
+$rme-quote: $color-n40;
+$rme-codeBackground: $color-n20;
+$rme-codeBorder: $rme-grey;
+$rme-horizontalRule: $rme-greyMid;
+$rme-imageErrorBackground: $rme-greyLight;
+
+$rme-scrollbarBackground: $rme-greyLight;
+$rme-scrollbarThumb: $rme-greyMid;

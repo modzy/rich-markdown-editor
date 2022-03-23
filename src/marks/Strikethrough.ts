@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { toggleMark } from "prosemirror-commands";
 import markInputRule from "../lib/markInputRule";
 import Mark from "./Mark";

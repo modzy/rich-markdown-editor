@@ -1,0 +1,47 @@
+@import "../rme-variables.scss";
+
+.rme-LinkSearchResult-IconWrapper {
+  flex-shrink: 0;
+  margin-right: 4px;
+  opacity: 0.8;
+}
+
+.rme-LinkSearchResult-ListItem {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 2px;
+  color: $rme-toolbarItem;
+  background: transparent;
+  font-family: $font-family-sans;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.2;
+  height: auto;
+
+  &.selected {
+    background: $rme-toolbarHoverBackground;
+  }
+
+  &.compact {
+    line-height: inherit;
+    height: 28px;
+  }
+}
+
+.rme-LinkSearchResult-Title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.rme-LinkSearchResult-Subtitle {
+  font-size: 13px;
+  opacity: 0.5;
+
+  &.selected {
+    opacity: 0.75;
+  }
+}

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as React from "react";
 import { Portal } from "react-portal";
 import some from "lodash/some";
@@ -55,7 +57,7 @@ function isVisible(props) {
   const fragment = slice.content;
   const nodes = fragment.content;
 
-  return some(nodes, n => n.content.size);
+  return some(nodes, (n) => n.content.size);
 }
 
 export default class SelectionToolbar extends React.Component<Props> {
@@ -75,11 +77,11 @@ export default class SelectionToolbar extends React.Component<Props> {
   }
 
   componentDidMount(): void {
-    window.addEventListener("mouseup", this.handleClickOutside);
+    window.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount(): void {
-    window.removeEventListener("mouseup", this.handleClickOutside);
+    window.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = (ev: MouseEvent): void => {
@@ -96,10 +98,6 @@ export default class SelectionToolbar extends React.Component<Props> {
     }
 
     const { view } = this.props;
-    if (view.hasFocus()) {
-      return;
-    }
-
     const { dispatch } = view;
 
     dispatch(
@@ -198,7 +196,7 @@ export default class SelectionToolbar extends React.Component<Props> {
     }
 
     // Some extensions may be disabled, remove corresponding items
-    items = items.filter(item => {
+    items = items.filter((item) => {
       if (item.name === "separator") return true;
       if (item.name && !this.props.commands[item.name]) return false;
       return true;

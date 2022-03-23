@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { MarkType, Mark } from "prosemirror-model";
 import { InputRule } from "prosemirror-inputrules";
 import { EditorState } from "prosemirror-state";
@@ -8,7 +10,7 @@ function getMarksBetween(start: number, end: number, state: EditorState) {
   state.doc.nodesBetween(start, end, (node, pos) => {
     marks = [
       ...marks,
-      ...node.marks.map(mark => ({
+      ...node.marks.map((mark) => ({
         start: pos,
         end: pos + node.nodeSize,
         mark,
@@ -19,7 +21,7 @@ function getMarksBetween(start: number, end: number, state: EditorState) {
   return marks;
 }
 
-export default function(
+export default function (
   regexp: RegExp,
   markType: MarkType,
   getAttrs?: (match) => Record<string, unknown>
@@ -40,8 +42,8 @@ export default function(
         const textEnd = textStart + match[m].length;
 
         const excludedMarks = getMarksBetween(start, end, state)
-          .filter(item => item.mark.type.excludes(markType))
-          .filter(item => item.end > matchStart);
+          .filter((item) => item.mark.type.excludes(markType))
+          .filter((item) => item.end > matchStart);
 
         if (excludedMarks.length) {
           return null;

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as React from "react";
 import { EditorView } from "prosemirror-view";
 import LinkEditor, { SearchResult } from "./LinkEditor";
@@ -45,7 +47,7 @@ export default class LinkToolbar extends React.Component<Props> {
     window.removeEventListener("mousedown", this.handleClickOutside);
   }
 
-  handleClickOutside = ev => {
+  handleClickOutside = (ev) => {
     if (
       ev.target &&
       this.menuRef.current &&

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { wrappingInputRule } from "prosemirror-inputrules";
 import Node from "./Node";
 import toggleWrap from "../commands/toggleWrap";

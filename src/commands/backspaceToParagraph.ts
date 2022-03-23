@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export default function backspaceToParagraph(type) {
   return (state, dispatch) => {
     const { $from, from, to, empty } = state.selection;

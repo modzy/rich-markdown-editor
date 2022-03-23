@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { TrashIcon } from "outline-icons";
 import { MenuItem } from "../types";
 import baseDictionary from "../dictionary";

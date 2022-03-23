@@ -1,0 +1,10 @@
+@import "../rme-variables.scss";
+
+.rme-ToolbarSeparator {
+  height: 24px;
+  width: 2px;
+  background: $rme-toolbarItem;
+  opacity: 0.3;
+  display: inline-block;
+  margin-left: 8px;
+}

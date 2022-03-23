@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /*
 Copyright 2020 Atlassian Pty Ltd
 
@@ -30,7 +32,7 @@ function hasCode(state: EditorState, pos: number) {
   const node = pos >= 0 && state.doc.nodeAt(pos);
 
   return node
-    ? !!node.marks.filter(mark => mark.type === code_inline).length
+    ? !!node.marks.filter((mark) => mark.type === code_inline).length
     : false;
 }
 

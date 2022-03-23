@@ -1,10 +1,15 @@
+// @ts-nocheck
+
 import * as React from "react";
 import { Portal } from "react-portal";
 import { EditorView } from "prosemirror-view";
+import cx from "classnames";
+
 import useComponentSize from "../hooks/useComponentSize";
 import useMediaQuery from "../hooks/useMediaQuery";
 import useViewportHeight from "../hooks/useViewportHeight";
-import styled from "styled-components";
+
+import "./FloatingToolbar.scss";
 
 const SSR = typeof window === "undefined";
 
@@ -98,7 +103,7 @@ function usePosition({ menuRef, isSelectingText, props }) {
       visible: true,
     };
   } else {
-    // calcluate the horizontal center of the selection
+    // calculate the horizontal center of the selection
     const halfSelection =
       Math.abs(selectionBounds.right - selectionBounds.left) / 2;
     const centerOfSelection = selectionBounds.left + halfSelection;
@@ -178,69 +183,18 @@ function FloatingToolbar(props) {
   );
 }
 
-const Wrapper = styled.div<{
-  active?: boolean;
-  offset: number;
-}>`
-  will-change: opacity, transform;
-  padding: 8px 16px;
-  position: absolute;
-  z-index: ${props => props.theme.zIndex + 100};
-  opacity: 0;
-  background-color: ${props => props.theme.toolbarBackground};
-  border-radius: 4px;
-  transform: scale(0.95);
-  transition: opacity 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    transform 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 150ms;
-  line-height: 0;
-  height: 40px;
-  box-sizing: border-box;
-  pointer-events: none;
-  white-space: nowrap;
-
-  &::before {
-    content: "";
-    display: block;
-    width: 24px;
-    height: 24px;
-    transform: translateX(-50%) rotate(45deg);
-    background: ${props => props.theme.toolbarBackground};
-    border-radius: 3px;
-    z-index: -1;
-    position: absolute;
-    bottom: -2px;
-    left: calc(50% - ${props => props.offset || 0}px);
-    pointer-events: none;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  ${({ active }) =>
-    active &&
-    `
-    transform: translateY(-6px) scale(1);
-    opacity: 1;
-  `};
-
-  @media print {
-    display: none;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    &:before {
-      display: none;
-    }
-
-    transition: opacity 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: scale(1);
-    border-radius: 0;
-    width: 100vw;
-    position: fixed;
-  }
-`;
+const Wrapper = React.forwardRef(function Wrapper(props, forwardedRef) {
+  const { active, offset, ...rest } = props;
+  return (
+    <div
+      ref={forwardedRef}
+      className={cx("rme-FloatingToolbar-Wrapper", {
+        active,
+      })}
+      {...rest}
+    />
+  );
+});
 
 export default React.forwardRef(function FloatingToolbarWithForwardedRef(
   props: Props,

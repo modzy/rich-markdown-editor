@@ -1,13 +1,15 @@
+// @ts-nocheck
+
 import * as React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
-import styled, { withTheme } from "styled-components";
-import theme from "../styles/theme";
+import cx from "classnames";
+
+import "./BlockMenuItem.scss";
 
 export type Props = {
   selected: boolean;
   disabled?: boolean;
   onClick: () => void;
-  theme: typeof theme;
   icon?: typeof React.Component | React.FC<any>;
   title: React.ReactNode;
   shortcut?: string;
@@ -26,12 +28,12 @@ function BlockMenuItem({
   const Icon = icon;
 
   const ref = React.useCallback(
-    node => {
+    (node) => {
       if (selected && node) {
         scrollIntoView(node, {
           scrollMode: "if-needed",
           block: "center",
-          boundary: parent => {
+          boundary: (parent) => {
             // All the parent elements of your target are checked until they
             // reach the #block-menu-container. Prevents body and other parent
             // elements from being scrolled
@@ -53,7 +55,9 @@ function BlockMenuItem({
         <>
           <Icon
             color={
-              selected ? theme.blockToolbarIconSelected : theme.blockToolbarIcon
+              selected
+                ? "var(--rme-blockToolbarIconSelected)"
+                : "var(--rme-blockToolbarIcon)"
             }
           />
           &nbsp;&nbsp;
@@ -65,47 +69,25 @@ function BlockMenuItem({
   );
 }
 
-const MenuItem = styled.button<{
-  selected: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1;
-  width: 100%;
-  height: 36px;
-  cursor: pointer;
-  border: none;
-  opacity: ${props => (props.disabled ? ".5" : "1")};
-  color: ${props =>
-    props.selected
-      ? props.theme.blockToolbarTextSelected
-      : props.theme.blockToolbarText};
-  background: ${props =>
-    props.selected
-      ? props.theme.blockToolbarSelectedBackground ||
-        props.theme.blockToolbarTrigger
-      : "none"};
-  padding: 0 16px;
-  outline: none;
+const MenuItem = React.forwardRef(function MenuItem(props, forwardedRef) {
+  const { className, disabled, selected, ...rest } = props;
 
-  &:hover,
-  &:active {
-    color: ${props => props.theme.blockToolbarTextSelected};
-    background: ${props =>
-      props.selected
-        ? props.theme.blockToolbarSelectedBackground ||
-          props.theme.blockToolbarTrigger
-        : props.theme.blockToolbarHoverBackground};
-  }
-`;
+  return (
+    <button
+      ref={forwardedRef}
+      className={cx("rme-blockMenuItem-menuItem", className, {
+        disabled,
+        selected,
+      })}
+      {...rest}
+    />
+  );
+});
 
-const Shortcut = styled.span`
-  color: ${props => props.theme.textSecondary};
-  flex-grow: 1;
-  text-align: right;
-`;
+function Shortcut({ className, ...rest }) {
+  return (
+    <span className={cx("rme-blockMenuItem-shortcut", className)} {...rest} />
+  );
+}
 
-export default withTheme(BlockMenuItem);
+export default BlockMenuItem;
